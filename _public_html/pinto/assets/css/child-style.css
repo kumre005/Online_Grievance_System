@@ -1,0 +1,16 @@
+.span3{width:16%;}
+.span9{width:84%;}
+
+.updateticket t{
+    text-align:center;
+
+}
+
+.updatecomplaint .submit1{
+        color: #fff;
+    background-color: #248aaf;
+    border-color: #20799a;
+    width: 130px;
+    height: 26px;
+    border-radius: 10px;
+}

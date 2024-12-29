@@ -1,0 +1,669 @@
+<?php
+session_start();
+error_reporting(0);
+include("users/includes/config.php");
+if(isset($_POST['submit']))
+{
+$ret=mysqli_query($con,"SELECT * FROM users WHERE userEmail='".$_POST['username']."' and password='".md5($_POST['password'])."'");
+
+$num=mysqli_fetch_array($ret);
+if($num>0)
+{
+
+$classExtension ="show";
+
+}
+else
+{
+$_SESSION['login']=$_POST['username'];	
+$uip=$_SERVER['REMOTE_ADDR'];
+$status=0;
+mysqli_query($con,"insert into userlog(username,userip,status) values('".$_SESSION['login']."','$uip','$status')");
+$errormsg="Invalid username or password";
+$extra="login.php";
+
+}
+}
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TemplateMo">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Complaint System</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-finance-business.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+	<link rel="stylesheet" href="assets/css/child-style.css">
+	<link rel="stylesheet" href="assets/css/animation1.css">
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+	   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+		   <script>
+<!--
+
+Finance Business TemplateMo
+
+https://templatemo.com/tm-545-finance-business
+
+-->
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+   <div class="sub-header">
+      <div class="container">
+        <div class="row">
+        <div class="news">
+          <marquee>
+            <p>
+            Dial Police:112 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pimpari Chinchwad Control Room:9529691766 &nbsp; &nbsp; Pimpari Chinchwad (Whatsapp):9307945283  &nbsp;  &nbsp; Public Relations Officer:9922007722  &nbsp; &nbsp; Women Safety:1091  &nbsp; &nbsp; Cyber Help:1930  &nbsp; &nbsp; Cyber Complaint Website:www.cybercrime.gov.in &nbsp;&nbsp; Lost Mobile Complaint:ceir.gov.in
+          </p>
+          </marquee>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+	
+    <header class="">
+
+      <nav class="navbar navbar-expand-sm bg-light">
+        <div class="container" >
+            <a class="navbar-brand" href="index.php">
+ <img width="240px" height="auto" src="assets/images/logo5.png"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.php">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+		<li class="nav-item view-login-modal loginsuccessful <?php echo $classExtension; ?>">
+          <a class="nav-link" href="#">Login</a>
+        </li>
+		
+		
+		
+		
+		
+		  <li class="nav-item">
+          <a class="nav-link" href="users"><i class="fa-solid fa-hand fa-2xl" style="color: #2b5297;"></i>&nbsp;Raise Complaint</a>
+        </li>
+		
+		  <li class="nav-item loginsuccessfulicon <?php echo $classExtension; ?>">
+          <a class="nav-link" href="users"><i class="fa-solid fa-user fa-xl" style="color: #6e86af;"></i></a>
+				<ul class="loginsubmenu-1">
+							<li><a href="users/profile.php">Profile</a></li>
+							<li><a href="users/dashboard.php">Dashboard</a></li>
+							<li><a href="users/profile.php">Change Password</a>
+							<li><a href="users/logout.php">Logout</a></li>
+				</ul>
+        </li>
+	
+      </ul>
+    </div>
+        </div>
+      </nav>
+
+
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>About Us</h1>
+            <span>We are the Final Year Students of NUTAN MAHARASHTRA INSTITUTE OF ENGINEERING & TECHNOLOGY, PUNE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+<!--
+    <div class="team">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-heading">
+              <h2>Our team <em>Members ,</em></h2>
+              
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="team-item">
+            
+              <div class="down-content">
+                <a href="https://drive.google.com/file/d/1Gbrntc-sGegonnRKkZOFB0Hh9MtVRfGq/view?usp=drivesdk"><h4>Saurabh Karande</h4></a>
+                <span>Enrollment No:- 1910510476</span>
+                <span>saurabhkarande001@gmail.com</span>
+				<span>Third Year
+				 <p> Department of Information Technology</p>
+               
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="team-item">
+             
+              <div class="down-content">
+               <a href="https://drive.google.com/file/d/1GnHHGn2PaKW-uoZUyhxLQF5Q9IBPGBOO/view"><h4>Ashwini Harer</h4></a>
+                <span>Enrollment No:- 1412280094</span>
+                <span>ashwiniharer0001@gmail.com</span>
+				<span>Third Year
+				 <p> Department of Information Technology</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="team-item">
+            
+              <div class="down-content">
+                <a href="https://drive.google.com/file/d/1GgR8HnEYrrHl1vv-1tR5hqSXjTQmxjvA/view?usp=drivesdk"><h4>Kunal Kale</h4></a>
+                <span>Enrollment No:- 1810510283</span>
+                <span>kunalkale4595@gmail.com</span>
+				<span>Third Year
+				 <p> Department of Information Technology</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+-->
+
+<section class="teamember">
+      <div class="row">
+        <h1>Our Team</h1>
+      </div>
+      <div class="row">
+        <!-- Column 1-->
+        <div class="column">
+          <div class="card">
+            <div class="img-container">
+			  <figure>
+				<img src="assets/images/mahesh1.jpeg" alt="mahesh">
+				<figcaption><h3>Mahesh Yadav</h3>
+            <p>Developer</p></figcaption>
+			</figure>
+            </div>
+            
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Column 2-->
+        <div class="column">
+          <div class="card">
+            <div class="img-container">
+            <img src="assets/images/saurabh.jpeg" />
+            </div>
+            <h3>Saurabh Karande</h3>
+            <p>Developer</p>
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Column 3-->
+        <div class="column">
+          <div class="card">
+            <div class="img-container">
+                <img src="assets/images/omkar.jpeg" />
+            </div>
+            <h3>Omkar Yadav</h3>
+            <p>Designer</p>
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+		<!-- Column 4-->
+        <div class="column">
+          <div class="card">
+            <div class="img-container">
+              <img src="assets/images/ishwar.jpeg" />
+            </div>
+            <h3>Ishwar Chaudhari</h3>
+            <p>Designer</p>
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+	
+	
+	
+	<!--
+	
+<section class="teamember teamani">
+      <div class="row">
+        <h1>Our Team</h1>
+      </div>
+      <div class="row">
+        
+        <div class="column">
+          <div class="card">
+            <div class="img-container">
+			  <figure>
+				<img src="assets/images/mahesh1.png" alt="Necromancer">
+				<figcaption><h3>Mahesh Yadav</h3>
+            <p>Developer</p></figcaption>
+			</figure>
+            </div>
+            
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+    
+       <div class="column">
+          <div class="card">
+            <div class="img-container">
+			  <figure>
+				<img src="assets/images/saurabh.png" alt="Necromancer">
+				<figcaption><h3>Saurabh Karande</h3>
+            <p>Developer</p></figcaption>
+			</figure>
+            </div>
+            
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+       
+        <div class="column">
+          <div class="card">
+            <div class="img-container">
+			  <figure>
+				<img src="assets/images/omkar.png" alt="Necromancer">
+				<figcaption><h3>Omkar Yadav</h3>
+            <p>Developer</p></figcaption>
+			</figure>
+            </div>
+            
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+		
+       <div class="column">
+          <div class="card">
+            <div class="img-container">
+			  <figure>
+				<img src="assets/images/ishwar.png" alt="Necromancer">
+				<figcaption><h3>Ishwar Chaudhari</h3>
+            <p>Developer</p></figcaption>
+			</figure>
+            </div>
+            
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+	-->
+	<!--
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-heading">
+              <h2><br>Under The <em>Guidance of,</em></h2>
+              
+            </div>
+          </div>  
+          <div class="col-md-4">
+            <div class="team-item">
+             
+              <div class="down-content">
+                <a href= "https://drive.google.com/file/d/1wW9EtYi5b7dCDiB8sb4nILJjovM2jFUL/view"><h4>Mrs.Priyanka.S.Ghode</h4>
+				 <span>Lecturer
+				 <p> Department of Information Technology</p>
+               
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="team-item">
+              
+              <div class="down-content">
+			  
+                <a href="https://drive.google.com/file/d/1fI6KGU2RW4DKDTwkeM1ep_kuVIAlRUnQ/view"><h4>Dr.Deepak.N.Rewadkar</h4></a>
+                 <span>Head Of Department 
+				 <p>Department of Information Technology </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="team-item">
+             
+              <div class="down-content">
+                <a href="https://www.gpawasari.ac.in/Default"><h4>Dr.D.R.Nandanwar</h4>
+                <span>Principal
+                <p>Government Polytechnic Awasari(KH), Pune</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        -->
+
+ <section class="teamember deptmember">
+      <div class="row">
+        <h1><br>Under The <em>Guidance of,</em></h1>
+      </div>
+      <div class="row">
+         <!-- Column 1-->
+        <div class="column">
+          <div class="card">
+            <div class="img-container">
+              <img src="assets/images/Dhiraj.jpeg" />
+            </div>
+            <h3>Dhiraj Sir</h3>
+            
+				 <p> </p>
+				 
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Column 2-->
+        <div class="column">
+          <div class="card">
+            <div class="img-container">
+            <img src="assets/images/HOD.jpg" />
+            </div>
+            <h3>Prof. Ashish Bapurao Manwatkar </h3>
+            <p>HOD of Information Technology</p>
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Column 3-->
+        <div class="column">
+          <div class="card">
+            <div class="img-container">
+                <img src="assets/images/nmeitprincipal.jpeg" />
+            </div>
+            <h3>Dr. Vilas Deotare</h3>
+            <p>Principal of NMIET</p>
+            <div class="icons">
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+		
+
+      </div>
+    </section>        
+
+    
+    <!-- Footer Starts Here -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 footer-item">
+            <h4>NMIET</h4>
+            <p>Follow Us and Stay Connected with us on social media-</p>
+            <ul class="social-icons">
+              <li><a rel="nofollow" href="https://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="https://twitter.com"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="https://linkedin.com"><i class="fa fa-linkedin"></i></a></li>
+           
+            </ul>
+          </div>
+          <div class="col-md-3 footer-item">
+            <h4>Useful Links</h4>
+            <ul class="menu-list">
+              <li><a href="https://www.nmiet.edu.in/">NMIET</a></li>
+              <li><a href="http://www.unipune.ac.in/">SPPU, PUNE</a></li>
+              <li><a href="https://mahadbtmahait.gov.in/login/login">MahaDBT</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 footer-item">
+            
+            <ul class="menu-list">
+              <li><a href="about.php">About Us</a></li>
+              <li><a href="#">How We Work</a></li>
+              <li><a href="#">Quick Support</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 footer-item last-item">
+            <h4>Contact Us</h4>
+            <div class="contact-form">
+              <form id="contact footer-contact" action="" method="post">
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <fieldset>
+                      <input name="name" type="text" class="form-control" id="name" placeholder="Full Name" required="">
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <fieldset>
+                      <input name="email" type="text" class="form-control" id="email" pattern="[^ @]*@[^ @]*" placeholder="E-Mail Address" required="">
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your Message" required=""></textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <button type="submit" id="form-submit" class="filled-button">Send Message</button>
+                    </fieldset>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    
+    <div class="sub-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <p>Copyright &copy; 2021 Team- Grievance Redressal Portal , Government Polytechnic Awasari(KH).
+            
+           </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Additional Scripts -->
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/slick.js"></script>
+    <script src="assets/js/accordions.js"></script>
+
+    <script language = "text/Javascript"> 
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+  </body>
+</html>

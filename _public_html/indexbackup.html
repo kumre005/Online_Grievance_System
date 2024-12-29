@@ -1,0 +1,495 @@
+<?php
+session_start();
+error_reporting(0);
+include("users/includes/config.php");
+if(isset($_POST['submit']))
+{
+$ret=mysqli_query($con,"SELECT * FROM users WHERE userEmail='".$_POST['username']."' and password='".md5($_POST['password'])."'");
+
+$num=mysqli_fetch_array($ret);
+if($num>0)
+{
+
+$classExtension ="show";
+
+}
+else
+{
+$_SESSION['login']=$_POST['username'];	
+$uip=$_SERVER['REMOTE_ADDR'];
+$status=0;
+mysqli_query($con,"insert into userlog(username,userip,status) values('".$_SESSION['login']."','$uip','$status')");
+$errormsg="Invalid username or password";
+$extra="login.php";
+
+}
+}
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TemplateMo">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Complaint System</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-finance-business.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+	<link rel="stylesheet" href="assets/css/child-style.css">
+	<link rel="stylesheet" href="assets/css/animation1.css">
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+	   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+		   <script>
+  $(document).ready(function(){
+    $('.counter').counterUp({
+      delay: 10,
+      time: 1200
+    });
+  });
+  </script> 
+   
+<!--
+
+Finance Business TemplateMo
+
+https://templatemo.com/tm-545-finance-business
+
+-->
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+<div class="sidebar">
+        <!-- Sidebar content goes here -->
+    </div>
+    <div class="sub-header">
+      <div class="container">
+        <div class="row">
+        <div class="news">
+          <marquee>
+            <p>
+            Dial Police:112 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pimpari Chinchwad Control Room:9529691766 &nbsp; &nbsp; Pimpari Chinchwad (Whatsapp):9307945283  &nbsp;  &nbsp; Public Relations Officer:9922007722  &nbsp; &nbsp; Women Safety:1091  &nbsp; &nbsp; Cyber Help:1930  &nbsp; &nbsp; Cyber Complaint Website:www.cybercrime.gov.in &nbsp;&nbsp; Lost Mobile Complaint:ceir.gov.in
+          </p>
+          </marquee>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+	
+    <header class="">
+
+      <nav class="navbar navbar-expand-sm bg-light">
+        <div class="container" >
+            <a class="navbar-brand" href="index.html">
+ <img width="70px" height="auto" src="assets/images/homelogo1.jpeg"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+		<li class="nav-item view-login-modal loginsuccessful <?php echo $classExtension; ?>">
+          <a class="nav-link" href="#">Login</a>
+        </li>
+		
+		
+		
+		
+		
+		  <li class="nav-item">
+          <a class="nav-link" href="users"><i class="fa-solid fa-hand fa-2xl" style="color: #2b5297;"></i>&nbsp;Raise Complaint</a>
+        </li>
+		
+		  <li class="nav-item loginsuccessfulicon <?php echo $classExtension; ?>">
+          <a class="nav-link" href="users"><i class="fa-solid fa-user fa-xl" style="color: #6e86af;"></i></a>
+				<ul class="loginsubmenu-1">
+							<li><a href="#">Profile</a></li>
+							<li><a href="users/dashboard.php">Dashboard</a></li>
+							<li><a href="#">Change Password</a>
+							<li><a href="#">Logout</a></li>
+				</ul>
+        </li>
+	
+      </ul>
+    </div>
+        </div>
+      </nav>
+
+
+    </header>
+
+    <!-- Page Content -->
+   
+
+-->
+    <!-- Banner Starts Here -->
+    <div class="main-banner header-text" id="top">
+	<img src="NMIET.jpeg" class="img-fluid" alt="Responsive image">
+    
+    <!-- Banner Ends Here -->
+	
+    </div>
+	
+	
+ <div class="popup">
+    <header>
+      
+      <div class="close"><i class="uil uil-times"></i></div>
+    </header>
+    <div class="content field">
+        <div class="container">
+    <input type="checkbox" id="flip">
+    <div class="cover">
+      <div class="front">
+        <img src="assets/images/frontImg.jpg" alt="">
+        <div class="text">
+          <span class="text-1">Every new friend is a <br> new adventure</span>
+          <span class="text-2">Let's get connected</span>
+        </div>
+      </div>
+      <div class="back">
+        <!--<img class="backImg" src="images/backImg.jpg" alt="">-->
+        <div class="text">
+          <span class="text-1">Complete miles of journey <br> with one step</span>
+          <span class="text-2">Let's get started</span>
+        </div>
+      </div>
+    </div>
+    <div class="forms">
+        <div class="form-content">
+          <div class="login-form login-wrap">
+            <div class="title">Login</div>
+           <form class="form-login" name="login" method="post">
+ <p style="padding-left:4%; padding-top:2%;  color:red">
+		        	<?php if($errormsg){
+echo htmlentities($errormsg);
+		        		}?></p>
+
+		        		<p style="padding-left:4%; padding-top:2%;  color:green">
+		        	<?php if($msg){
+echo htmlentities($msg);
+		        		}?></p>
+            <div class="input-boxes">
+              <div class="input-box">
+                <i class="fas fa-envelope"></i>
+                <input type="text" placeholder="Enter your email" name="username" placeholder="Email"  required autofocus>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Enter your password"  name="password" required>
+              </div>
+              <div class="text"><a href="#">Forgot password?</a></div>
+              <div class="button input-box">
+                <button class="btn btn-theme btn-block" name="submit" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+              </div>
+              <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label></div>
+            </div>
+        </form>
+      </div>
+        <div class="signup-form">
+          <div class="title">Signup</div>
+        <form action="#">
+            <div class="input-boxes">
+              <div class="input-box">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Enter your name" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-envelope"></i>
+                <input type="text" placeholder="Enter your email" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Enter your password" required>
+              </div>
+              <div class="button input-box">
+                <input type="submit" value="Sumbit">
+              </div>
+              <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+            </div>
+      </form>
+    </div>
+    </div>
+    </div>
+  </div>
+       
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+<!--
+  
+  -->
+
+  <div class="counter-up">
+    <div class="content">
+      <div class="box">
+        <div class="icon"><i class="fas fa-history"></i></div>
+        <div class="count-digit">724</div>
+        <div class="text">Working Hours</div>
+      </div>
+      <div class="box">
+        <div class="icon"><i class="fas fa-gift"></i></div>
+        <div class="count-digit">508</div>
+        <div class="text">Completed Projects</div>
+      </div>
+      <div class="box">
+        <div class="icon"><i class="fas fa-users"></i></div>
+        <div class="count-digit">436</div>
+        <div class="text">Happy Clients</div>
+      </div>
+      <div class="box">
+        <div class="icon"><i class="fas fa-award"></i></div>
+        <div class="count-digit">120</div>
+        <div class="text">Awards Received</div>
+      </div>
+    </div>
+  </div>
+
+
+ 
+
+
+
+    <div class="fun-facts">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="left-content">
+              
+              <h2>Milestones in the Journey <em>Institute Growth</em></h2>
+              <p>
+2008- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+<br>2009- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+<br>2010- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+<br>2011- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut  
+<br>2003- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut  
+<br>2014- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut . 
+<br>2012- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut . 
+<br>2015- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut . 
+<br>2016- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+<br>2007- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+<br>2018- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
+<br>2019- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+<br>2020- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+<br>2021- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+<br>2022- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+<br>2023- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut. 
+
+</p>
+             
+            </div>
+          </div>
+		  
+          <div class="col-md-6 align-self-center">
+            <div class="row">
+
+-->
+<img src="assets/images/milestone.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="mission_vission">
+    <div class="container">
+	<div class="roww">
+    <div class="col-sm cardd vission">
+		<div class="col-sm image">
+		  <img src="assets/images/vision.jpg" class="card-img-top" alt="...">
+		</div>
+		<div class="col-sm title">
+		  <h1>Vision</h1>
+		   <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+.</p>
+		</div>		
+    </div>	
+	<div class="col-sm cardd mission">
+		<div class="col-sm image">
+		  <img src="assets/images/mission.png" class="card-img-top" alt="...">
+		</div>
+		<div class="col-sm title">
+		  <h1>Mission</h1>
+		   <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+</p>
+		</div>		
+    </div>
+	<div class="col-sm cardd values">
+		<div class="col-sm image">
+		  <img src="assets/images/values.jpg" class="card-img-top" alt="...">
+		</div>
+		<div class="col-sm title">
+		  <h1>Values</h1>
+		   <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+</p>
+		</div>		
+    </div>
+  </div>
+</div>
+</div>
+    <!-- Footer Starts Here -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 footer-item">
+            <h4>NMIET</h4>
+            <p>Follow Us and Stay Connected with us on social media-</p>
+            <ul class="social-icons">
+              <li><a rel="nofollow" href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook" style="color: #6a54d9;"></i></a></li>
+              <li><a href="https://twitter.com"><i class="fa-brands fa-instagram" style="color: #6a54d9;"></i></a></li>
+              <li><a href="https://linkedin.com"><i class="fa-brands fa-linkedin" style="color: #6a54d9;"></i></a></li>
+			  <li><a href="https://linkedin.com"><i class="fa-brands fa-twitter" style="color: #6a54d9;"></i></a></li>
+           
+            </ul>
+          </div>
+          <div class="col-md-3 footer-item">
+            <h4>Useful Links</h4>
+            <ul class="menu-list">
+              <li><a href="https://www.nmiet.edu.in/">NMIET</a></li>
+              <li><a href="http://www.unipune.ac.in/">SPPU, PUNE</a></li>
+              <li><a href="https://mahadbtmahait.gov.in/login/login">MahaDBT</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 footer-item">
+            
+            <ul class="menu-list">
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="#">How We Work</a></li>
+              <li><a href="#">Quick Support</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 footer-item last-item">
+            <h4>Contact Us</h4>
+            <div class="contact-form">
+              <form id="contact footer-contact" action="" method="post">
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <fieldset>
+                      <input name="name" type="text" class="form-control" id="name" placeholder="Full Name" required="">
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <fieldset>
+                      <input name="email" type="text" class="form-control" id="email" pattern="[^ @]*@[^ @]*" placeholder="E-Mail Address" required="">
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your Message" required=""></textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <button type="submit" id="form-submit" class="filled-button">Send Message</button>
+                    </fieldset>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    <div class="sub-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <span>Copyright &copy; 2024 Team- Grievance Relief,</span><span class="nmiet"> NMIET
+            
+           </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Additional Scripts -->
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/slick.js"></script>
+    <script src="assets/js/accordions.js"></script>
+
+    <script language = "text/Javascript"> 
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+
+  
+  <script>
+    const profileLink = document.querySelector(".loginsuccessfulicon");
+    const sidebar = document.querySelector(".sidebar");
+
+    profileLink.addEventListener("click", () => {
+        sidebar.classList.toggle("show");
+    });
+</script>
+ <script src="users/assets/js/jquery.js"></script>
+    <script src="users/js/bootstrap.min.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+
+  </body>
+</html>
